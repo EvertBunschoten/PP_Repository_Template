@@ -16,8 +16,7 @@ testscript="run_regression.py"
 workdir=$PWD
 export CCACHE_DIR=$workdir/ccache
 
-# Parse arguments
-while [ "$`echo $1 | cut -c1`" = "-" ]
+while [ $# -gt 0 ];
 do
     case "$1" in
         -b)
