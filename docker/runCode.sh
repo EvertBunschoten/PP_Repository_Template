@@ -72,7 +72,7 @@ export PATH=$PATH:$REPO_HOME/bin/
 
 # Run script for regression tests 
 echo "Running regression tests for $name"
-cd "RegressionTests"
+cd "regressiontests"
 
 if [ ! -z "$testscript"]; then
     python3 $testscript
