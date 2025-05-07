@@ -12,30 +12,28 @@ where:
 
 flags=""
 branch=""
-testscript=""
+testscript="run_regression.py"
 workdir=$PWD
 export CCACHE_DIR=$workdir/ccache
 
 # Parse arguments
-if [ "$#" -ne 0 ]; then
-  while [ "$(echo $1 | cut -c1)" = "-" ]
-    do
-        case "$1" in
-            -b)
-                    branch=$2
-                    shift 2
-                ;;
-            -s)
-                    testscript=$2
-                    shift 2
-                ;;
-            *)
-                    echo "$usage" >&2
-                    exit 1
-                ;;
-    esac
-    done
-fi
+while [ "$`echo $1 | cut -c1`" = "-" ]
+do
+    case "$1" in
+        -b)
+                branch=$2
+                shift 2
+            ;;
+        -s)
+                testscript=$2
+                shift 2
+            ;;
+        *)
+                echo "$usage" >&2
+                exit 1
+            ;;
+esac
+done
 
 # Clone source code using git into directory "src".
 if [ ! -z "$branch" ]; then
@@ -74,9 +72,4 @@ export PATH=$PATH:$REPO_HOME/bin/
 echo "Running regression tests for $name"
 cd "regressiontests"
 
-if [ ! -z "$testscript"]; then
-    python3 $testscript
-else
-    echo "Test script not specified, use -s to specify the file name containing describing the regression tests."
-    exit 1
-fi 
+python3 $testscript
